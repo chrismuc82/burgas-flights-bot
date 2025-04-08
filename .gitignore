@@ -4,6 +4,7 @@ venv/
 
 # PyCharm project files
 .idea/
+.DS_STORE
 
 # Python cache files
 __pycache__/
