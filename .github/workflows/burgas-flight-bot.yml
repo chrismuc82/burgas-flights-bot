@@ -1,0 +1,36 @@
+name: Run Flight Bot
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # alle 5 Minuten
+  workflow_dispatch:  # manuelles Triggern
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    env:
+      KIWI_API_KEY: ${{ secrets.KIWI_API_KEY }}
+      TELEGRAM_API_KEY: ${{ secrets.TELEGRAM_API_KEY }}
+      GROUP_ID: ${{ secrets.GROUP_ID }}
+      GIST_ID: ${{ secrets.GIST_ID }}
+      GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run script
+
+        run: |
+          python main.py
